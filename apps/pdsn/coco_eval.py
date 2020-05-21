@@ -13,7 +13,7 @@ import pycocotools.mask as mask_util
 
 from collections import defaultdict
 
-import utils
+import apps.pdsn.utils as utils
 
 
 class CocoEvaluator(object):
@@ -25,7 +25,7 @@ class CocoEvaluator(object):
         self.iou_types = iou_types
         self.coco_eval = {}
         for iou_type in iou_types:
-            print('######## coco_gt: {0}; iouType: {1};'.format(type(coco_gt), type(iou_type)))
+            print('######## coco_gt: {0}; iouType: {1}; {2};'.format(type(coco_gt), type(iou_type), iou_type))
             self.coco_eval[iou_type] = COCOeval(coco_gt, iouType=iou_type)
 
         self.img_ids = []

@@ -16,8 +16,8 @@ class PdsnApp(object):
         # our dataset has two classes only - background and person
         num_classes = 2
         # use our dataset and defined transformations
-        dataset = PnfnDataset('./data/PennFudanPed', PnfnDataset.get_transform(train=True))
-        dataset_test = PnfnDataset('./data/PennFudanPed', PnfnDataset.get_transform(train=False))
+        dataset = PnfnDataset('./datasets/PennFudanPed', PnfnDataset.get_transform(train=True))
+        dataset_test = PnfnDataset('./datasets/PennFudanPed', PnfnDataset.get_transform(train=False))
         # split the dataset in train and test set
         indices = torch.randperm(len(dataset)).tolist()
         dataset = torch.utils.data.Subset(dataset, indices[:-50])
