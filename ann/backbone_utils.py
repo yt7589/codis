@@ -2,10 +2,11 @@ from collections import OrderedDict
 from torch import nn
 
 from torchvision.ops import misc as misc_nn_ops
-from torchvision.models.utils import IntermediateLayerGetter
 from torchvision.models import resnet
 
 from ann.feature_pyramid_network import FeaturePyramidNetwork, LastLevelMaxPool
+
+from ann.intermediate_layer_getter import IntermediateLayerGetter
 
 
 class BackboneWithFPN(nn.Sequential):
