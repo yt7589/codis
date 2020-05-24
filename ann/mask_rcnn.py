@@ -9,9 +9,8 @@ from torchvision.ops import MultiScaleRoIAlign
 
 from torchvision.models.utils import load_state_dict_from_url
 
-from torchvision.models.detection.faster_rcnn import FasterRCNN
-
 from ann.backbone_utils import resnet_fpn_backbone
+from ann.faster_rcnn import FasterRCNN
 
 __all__ = [
     "MaskRCNN", "maskrcnn_resnet50_fpn",

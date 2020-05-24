@@ -17,7 +17,7 @@ class PdsnModel(nn.Module):
     @staticmethod
     def get_model_instance_segmentation(num_classes):
         # load an instance segmentation model pre-trained on COCO
-        print('load my own model...')
+        print('load my own model...v0.0.1')
         model = mask_rcnn.maskrcnn_resnet50_fpn(pretrained=True)
         # get number of input features for the classifier
         in_features = model.roi_heads.box_predictor.cls_score.in_features

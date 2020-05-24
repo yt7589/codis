@@ -7,11 +7,10 @@ import torch.nn.functional as F
 from torchvision.ops import misc as misc_nn_ops
 from torchvision.ops import MultiScaleRoIAlign
 
-from torchvision.models.utils import load_state_dict_from_url
-
-from torchvision.models.detection.rpn import AnchorGenerator, RPNHead, RegionProposalNetwork
-from torchvision.models.detection.roi_heads import RoIHeads
-from torchvision.models.detection.transform import GeneralizedRCNNTransform
+from ann.pt_utils import load_state_dict_from_url
+from ann.transform import GeneralizedRCNNTransform
+from ann.rpn import AnchorGenerator, RPNHead, RegionProposalNetwork
+from ann.roi_heads import RoIHeads
 from ann.generalized_rcnn import GeneralizedRCNN
 from ann.intermediate_layer_getter import resnet_fpn_backbone
 
