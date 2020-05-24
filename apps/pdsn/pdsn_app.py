@@ -11,7 +11,7 @@ class PdsnApp(object):
         self.name = 'apps.pdsn.PdsnApp'
 
     def startup(self):
-        print('分类检测实例分割综合实验平台')
+        print('分类检测实例分割综合实验平台 v0.0.1')
         device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
         # our dataset has two classes only - background and person
         num_classes = 2
@@ -47,4 +47,4 @@ class PdsnApp(object):
             lr_scheduler.step()
             # evaluate on the test dataset
             evaluate(model, data_loader_test, device=device)
-        print('codis v0.0.1 ^_^')
+        print('^_^')
