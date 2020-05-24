@@ -5,7 +5,7 @@ from torch import nn
 
 from torchvision.ops import boxes as box_ops
 
-from pt_utils as det_utils
+import pt_utils as det_utils
 
 
 class AnchorGenerator(nn.Module):
