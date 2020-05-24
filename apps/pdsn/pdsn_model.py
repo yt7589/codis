@@ -8,7 +8,7 @@ from torchvision.models.detection.rpn import AnchorGenerator
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
 
-from ann.mask_rcnn as mask_rcnn
+import ann.mask_rcnn as mask_rcnn
 
 class PdsnModel(nn.Module):
     def __init__(self, num_classes=2, ):
