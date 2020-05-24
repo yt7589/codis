@@ -8,6 +8,8 @@ from torchvision.models.detection.rpn import AnchorGenerator
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
 
+import ann.mask_rcnn as mask_rcnn
+
 class PdsnModel(nn.Module):
     def __init__(self, num_classes=2, ):
         super(PdsnModel, self).__init__()
@@ -15,7 +17,7 @@ class PdsnModel(nn.Module):
     @staticmethod
     def get_model_instance_segmentation(num_classes):
         # load an instance segmentation model pre-trained on COCO
-        model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True)
+        model = mask_rcnn.maskrcnn_resnet50_fpn(pretrained=True)
         # get number of input features for the classifier
         in_features = model.roi_heads.box_predictor.cls_score.in_features
         # replace the pre-trained head with a new one
