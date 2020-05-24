@@ -7,7 +7,7 @@ from torchvision.ops import boxes as box_ops
 from torchvision.ops import misc as misc_nn_ops
 from torchvision.ops import roi_align
 
-from . import _utils as det_utils
+import ann.pt_utils as det_utils
 
 
 def fastrcnn_loss(class_logits, box_regression, labels, regression_targets):
