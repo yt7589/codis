@@ -56,6 +56,8 @@ class GeneralizedRCNN(nn.Module):
         losses.update(detector_losses)
         losses.update(proposal_losses)
 
+        print('generalized_rcnn is running ......')
+
         if self.training:
             return losses
 
