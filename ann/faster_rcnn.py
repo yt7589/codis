@@ -12,7 +12,7 @@ from ann.transform import GeneralizedRCNNTransform
 from ann.rpn import AnchorGenerator, RPNHead, RegionProposalNetwork
 from ann.roi_heads import RoIHeads
 from ann.generalized_rcnn import GeneralizedRCNN
-from ann.intermediate_layer_getter import resnet_fpn_backbone
+from ann.backbone_utils import resnet_fpn_backbone
 
 
 __all__ = [
