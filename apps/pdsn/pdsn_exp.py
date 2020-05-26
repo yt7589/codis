@@ -28,14 +28,11 @@ class PdsnExp(object):
             m, {'layer1': 'feat1', 'layer2': 'feat2', 'layer3': 'feat3', 'layer4': 'feat4'}
         )
         x0 = new_m(torch.rand(1, 3, 224, 224))
+        print('Features:')
         for k, v in x0.items():
             print('{0}:{1};'.format(k, v.shape))
-        '''
-        x = OrderedDict()
-        x['feat0'] = torch.rand(1, 10, 64, 64)
-        x['feat2'] = torch.rand(1, 20, 16, 16)
-        x['feat3'] = torch.rand(1, 30, 8, 8)
-        '''
         output = fpn(x0)
-        print([(k, v.shape) for k, v in output.items()])
+        print('FPNs:')
+        for k, v in output.items():
+            print('{0}:{1};'.format(k, v.shape))
         
