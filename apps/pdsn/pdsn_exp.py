@@ -1,4 +1,5 @@
 #
+import torch
 import torchvision
 
 class PdsnExp(object):
