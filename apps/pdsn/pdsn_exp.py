@@ -15,7 +15,7 @@ class PdsnExp(object):
         print([(k, v.shape) for k, v in out.items()])
 
     def exp_feature_pyramid_network(self):
-        fpn = torchvision.ops.FeaturePyramidNetwork([10, 20, 30], 5)
+        fpn = torchvision.ops.FeaturePyramidNetwork([64, 128, 256, 512], 32)
         m = torchvision.models.resnet50(pretrained=True)
         new_m = torchvision.models._utils.IntermediateLayerGetter(
             m, {'layer1': 'feat1', 'layer2': 'feat2', 'layer3': 'feat3', 'layer4': 'feat4'}
