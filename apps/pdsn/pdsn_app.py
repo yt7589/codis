@@ -5,6 +5,8 @@ from torchvision import utils
 from apps.pdsn.pnfn_dataset import PnfnDataset
 from apps.pdsn.pdsn_model import PdsnModel
 from apps.pdsn.engine import train_one_epoch, evaluate
+#
+from apps.pdsn.pdsn_exp import PdsnExp
 
 class PdsnApp(object):
     def __init__(self):
@@ -12,6 +14,11 @@ class PdsnApp(object):
 
     def startup(self):
         print('分类检测实例分割综合实验平台 v0.0.1 自研mask_rcnn.py')
+        i_debug = 1
+        if 1 == i_debug:
+            exp = PdsnExp()
+            exp.exp_intermediate_layer_getter()
+            return
         device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
         # our dataset has two classes only - background and person
         num_classes = 2
