@@ -71,7 +71,7 @@ class PdsnExp(object):
         print(predictions)
 
     def exp_(self):
-        backbone = resnet_fpn_backbone('resnet50', pretrained_backbone)
+        backbone = resnet_fpn_backbone('resnet50', True)
         x = [torch.rand(3, 300, 400), torch.rand(3, 500, 400)]
         backbone.eval()
         features = backbone(x)
