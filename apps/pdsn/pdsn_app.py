@@ -17,7 +17,7 @@ class PdsnApp(object):
         i_debug = 1
         if 1 == i_debug:
             exp = PdsnExp()
-            exp.exp_feature_pyramid_network()
+            exp.exp_mask_rcnn()
             return
         device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
         # our dataset has two classes only - background and person
