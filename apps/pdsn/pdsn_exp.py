@@ -5,6 +5,7 @@ import torchvision
 from ann.mask_rcnn import MaskRCNN
 from ann.rpn import AnchorGenerator
 import ann.resnet as resnet
+from ann.backbone_utils import resnet_fpn_backbone
 
 class PdsnExp(object):
     def __init__(self):
@@ -56,11 +57,25 @@ class PdsnExp(object):
                           rpn_anchor_generator=anchor_generator,
                           box_roi_pool=roi_pooler,
                           mask_roi_pool=mask_roi_pooler)
-        #model.eval()
-        model.train()
         x = [torch.rand(3, 300, 400), torch.rand(3, 500, 400)]
+        '''
+        model.train()
+        targets = [
+            {
+                'boxes': 
+            }
+        ]
+        predictions = model(x, targets)
+        '''
         predictions = model(x)
         print(predictions)
+
+    def exp_(self):
+        backbone = resnet_fpn_backbone('resnet50', pretrained_backbone)
+        x = [torch.rand(3, 300, 400), torch.rand(3, 500, 400)]
+        backbone.eval()
+        features = backbone(x)
+        print(features)
 
 
 
