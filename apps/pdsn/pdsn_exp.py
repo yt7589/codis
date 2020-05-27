@@ -34,8 +34,10 @@ class PdsnExp(object):
             print('{0}:{1};'.format(k, v.shape))
 
     def exp_mask_rcnn(self):
-        backbone = resnet.resnet50(pretrained=True)
-        backbone.out_channels = 2048
+        # backbone = resnet.resnet50(pretrained=True)
+        backbone = torchvision.models.mobilenet_v2(pretrained=True).features
+        #backbone.out_channels = 2048 # resnet 50
+        backbone.out_channels = 1280
         anchor_generator = AnchorGenerator(sizes=((32, 64, 128, 256, 512),),
                                             aspect_ratios=((0.5, 1.0, 2.0),))
         roi_pooler = torchvision.ops.MultiScaleRoIAlign(featmap_names=[0],
