@@ -1,5 +1,6 @@
 #
 from collections import OrderedDict
+import numpy as np
 import torch
 import torchvision
 from ann.mask_rcnn import MaskRCNN
