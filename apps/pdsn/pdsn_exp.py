@@ -56,7 +56,8 @@ class PdsnExp(object):
                           rpn_anchor_generator=anchor_generator,
                           box_roi_pool=roi_pooler,
                           mask_roi_pool=mask_roi_pooler)
-        model.eval()
+        #model.eval()
+        model.train()
         x = [torch.rand(3, 300, 400), torch.rand(3, 500, 400)]
         predictions = model(x)
         print(predictions)
