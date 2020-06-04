@@ -73,12 +73,14 @@ class PdsnExp(object):
         print(predictions)
 
     def exp_(self):
+        '''
         backbone = resnet_fpn_backbone('resnet50', True)
         x0 = np.array([torch.rand(3, 300, 400), torch.rand(3, 500, 400)])
         x = x0.from_numpy()
         backbone.eval()
         features = backbone(x)
         print(features)
+        '''
 
 
 
