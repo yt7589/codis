@@ -21,18 +21,19 @@ class PdsnExp(object):
         print([(k, v.shape) for k, v in out.items()])
 
     def exp_feature_pyramid_network(self):
+        x = torch.rand(1, 3, 224, 224)
         m = torchvision.models.resnet50(pretrained=True)
         new_m = torchvision.models._utils.IntermediateLayerGetter(
             m, {'layer1': 'feat1', 'layer2': 'feat2', 'layer3': 'feat3', 'layer4': 'feat4'}
         )
-        x0 = new_m(torch.rand(1, 3, 224, 224))
-        print('Features:')
-        for k, v in x0.items():
-            print('{0}:{1};'.format(k, v.shape))
+        # forward
+        y_hat = m(x)
+        x0 = new_m(x)
         fpn = torchvision.ops.FeaturePyramidNetwork([256, 512, 1024, 2048], 32)
-        output = fpn(x0)
+        y_fp = fpn(x0)
+        print('y: {0};'.format(y_hat.shape))
         print('FPNs:')
-        for k, v in output.items():
+        for k, v in y_fp.items():
             print('{0}:{1};'.format(k, v.shape))
 
     def exp_mask_rcnn(self):
