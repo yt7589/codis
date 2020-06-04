@@ -53,14 +53,11 @@ class PdsnExp(object):
         )
         fpn = torchvision.ops.FeaturePyramidNetwork([256, 512, 1024, 2048], 32)
         # forward
-        y_0 = model(x)
-        y_0 = torch.flatten(y_0, start_dim=1, end_dim=-1)
-        y_1 = base_fc(y_0)
-        #y_0 = y_0.view(y_0.shape[0], y_0.shape[1])
-        #y_1 = base_flatten(y_0)
-        #
-        x0 = new_m(x)
-        fvs = fpn(x0)
+        base_a_1 = model(x)
+        base_a_1 = torch.flatten(base_a_1, start_dim=1, end_dim=-1)
+        base_a_2 = base_fc(base_a_1)
+        fpn_a1 = new_m(x)
+        fvs = fpn(fpn_a1)
         fv1 = self.get_feature_vector(fv_fc, fvs, 'feat1')
         fv2 = self.get_feature_vector(fv_fc, fvs, 'feat2')
         fv3 = self.get_feature_vector(fv_fc, fvs, 'feat3')
@@ -72,16 +69,11 @@ class PdsnExp(object):
             coefficients['feat3']*fv3,
             coefficients['feat4']*fv4
         ], dim = 1)
-        y_hat = classifier(z)
-        print('y_0: {0};'.format(y_0.shape))
-        print('y_1: {0};'.format(y_1.shape))
+        #y_hat = classifier(z)
+        print('base_a_2: {0};'.format(base_a_2.shape))
         print('fv1: {0};'.format(fv1.shape))
         print('z: {0};'.format(z.shape))
-        print('y_hat: {0};'.format(y_hat.shape))
-        '''
-        for k, v in fvs.items():
-            print('{0}:{1};'.format(k, v.shape))
-        '''
+        #print('y_hat: {0};'.format(y_hat.shape))
 
     def get_feature_vector(self, fv_fc, fvs, feature_name):
         x_fv = fvs[feature_name]
