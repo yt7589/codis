@@ -63,7 +63,7 @@ class PdsnExp(object):
         fv3 = self.get_feature_vector(fv_fc, fvs, 'feat3')
         fv4 = self.get_feature_vector(fv_fc, fvs, 'feat4')
         z = torch.cat([
-            coefficients['base']*y_0, 
+            coefficients['base']*base_a_2, 
             coefficients['feat1']*fv1,
             coefficients['feat2']*fv2,
             coefficients['feat3']*fv3,
