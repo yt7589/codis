@@ -33,8 +33,20 @@ class PdsnExp(object):
         m = torchvision.models.resnet50(pretrained=True)
         model = nn.Sequential(*list(m.children())[:-2])
         base_fc = nn.Linear(fc_dim * 7 * 7, base_dim)
-        fv1_fc = nn.Linear(32*56*56, feature_dim)
-        avgpool = nn.AdaptiveAvgPool2d(output_size=1)
+        fv_fc = {
+            'feat1': nn.Linear(32*56*56, feature_dim),
+            'feat2': nn.Linear(32*28*28, feature_dim),
+            'feat3': nn.Linear(32*14*14, feature_dim),
+            'feat4': nn.Linear(32*7*7, feature_dim)
+        }
+        coefficients = {
+            'base': 1.0,
+            'feat1': 1.0,
+            'feat2': 1.0,
+            'feat3': 1.0,
+            'feat4': 1.0
+        }
+        #avgpool = nn.AdaptiveAvgPool2d(output_size=1)
         classifier = nn.Linear(2048, num_classes, bias=False)
         new_m = torchvision.models._utils.IntermediateLayerGetter(
             m, {'layer1': 'feat1', 'layer2': 'feat2', 'layer3': 'feat3', 'layer4': 'feat4'}
@@ -49,16 +61,32 @@ class PdsnExp(object):
         #
         x0 = new_m(x)
         fvs = fpn(x0)
-        x_fv1 = fvs['feat1']
-        x_fv1 = torch.flatten(x_fv1, start_dim=0, end_dim=-1)
-        fv1 = fv1_fc(x_fv1)
+        fv1 = self.get_feature_vector(fvs, 'feat1')
+        fv2 = self.get_feature_vector(fvs, 'feat2')
+        fv3 = self.get_feature_vector(fvs, 'feat3')
+        fv4 = self.get_feature_vector(fvs, 'feat4')
+        z = torch.cat([
+            coefficients['base']*y_0, 
+            coefficients['feat1']*fv1,
+            coefficients['feat2']*fv2,
+            coefficients['feat3']*fv3,
+            coefficients['feat4']*fv4
+        ], dim = 1)
+        y_hat = classifier(z)
         print('y_0: {0};'.format(y_0.shape))
         print('y_1: {0};'.format(y_1.shape))
         print('fv1: {0};'.format(fv1.shape))
+        print('z: {0};'.format(z.shape))
+        print('y_hat: {0};'.format(y_hat.shape))
         '''
         for k, v in fvs.items():
             print('{0}:{1};'.format(k, v.shape))
         '''
+
+    def get_feature_vector(self, fvs, feature_name):
+        x_fv = fvs[feature_name]
+        x_fv = torch.flatten(x_fv, start_dim=0, end_dim=-1)
+        return fv_fc[feature_name](x_fv)
 
     def exp_mask_rcnn(self):
         # backbone = resnet.resnet50(pretrained=True)
