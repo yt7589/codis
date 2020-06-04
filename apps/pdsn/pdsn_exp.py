@@ -54,7 +54,7 @@ class PdsnExp(object):
         fpn = torchvision.ops.FeaturePyramidNetwork([256, 512, 1024, 2048], 32)
         # forward
         y_0 = model(x)
-        y_0 = torch.flatten(y_0, start_dim=0, end_dim=-1)
+        y_0 = torch.flatten(y_0, start_dim=1, end_dim=-1)
         y_1 = base_fc(y_0)
         #y_0 = y_0.view(y_0.shape[0], y_0.shape[1])
         #y_1 = base_flatten(y_0)
@@ -85,7 +85,7 @@ class PdsnExp(object):
 
     def get_feature_vector(self, fv_fc, fvs, feature_name):
         x_fv = fvs[feature_name]
-        x_fv = torch.flatten(x_fv, start_dim=0, end_dim=-1)
+        x_fv = torch.flatten(x_fv, start_dim=1, end_dim=-1)
         return fv_fc[feature_name](x_fv)
 
     def exp_mask_rcnn(self):
