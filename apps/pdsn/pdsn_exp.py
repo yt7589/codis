@@ -69,11 +69,11 @@ class PdsnExp(object):
             coefficients['feat3']*fv3,
             coefficients['feat4']*fv4
         ], dim = 1)
-        #y_hat = classifier(z)
+        y_hat = classifier(z)
         print('base_a_2: {0};'.format(base_a_2.shape))
         print('fv1: {0};'.format(fv1.shape))
         print('z: {0};'.format(z.shape))
-        #print('y_hat: {0};'.format(y_hat.shape))
+        print('y_hat: {0};'.format(y_hat.shape))
 
     def get_feature_vector(self, fv_fc, fvs, feature_name):
         x_fv = fvs[feature_name]
