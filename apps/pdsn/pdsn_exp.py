@@ -26,17 +26,19 @@ class PdsnExp(object):
         x = torch.rand(1, 3, 224, 224)
         m = torchvision.models.resnet50(pretrained=True)
         model = nn.Sequential(*list(m.children())[:-2])
+        avgpool = nn.AdaptiveAvgPool2d(output_size=1)
+        classifier = nn.Linear(2048, num_classes, bias=False)
         new_m = torchvision.models._utils.IntermediateLayerGetter(
             m, {'layer1': 'feat1', 'layer2': 'feat2', 'layer3': 'feat3', 'layer4': 'feat4'}
         )
-        avgpool = nn.AdaptiveAvgPool2d(output_size=1)
-        classifier = nn.Linear(2048, num_classes, bias=False)
         # forward
-        y_hat = model(x)
+        y_0 = model(x)
+        y_1 = avgpool(y_0)
         x0 = new_m(x)
         fpn = torchvision.ops.FeaturePyramidNetwork([256, 512, 1024, 2048], 32)
         y_fp = fpn(x0)
-        print('y: {0};'.format(y_hat.shape))
+        print('y_0: {0};'.format(y_0.shape))
+        print('y_1: {0};'.format(y_1.shape))
         print('FPNs:')
         for k, v in y_fp.items():
             print('{0}:{1};'.format(k, v.shape))
