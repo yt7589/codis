@@ -12,6 +12,7 @@ from ann.backbone_utils import resnet_fpn_backbone
 class PdsnExp(object):
     def __init__(self):
         self.name = ''
+        
 
     def exp_intermediate_layer_getter(self):
         m = torchvision.models.resnet50(pretrained=True)
@@ -22,20 +23,29 @@ class PdsnExp(object):
         print([(k, v.shape) for k, v in out.items()])
 
     def exp_feature_pyramid_network(self):
+        # hyper parameter
         num_classes = 8999
+        fc_dim = 2048
+        feature_dim = 128
+        base_dim = 2048 - feature_dim
+        # network definition
         x = torch.rand(1, 3, 224, 224)
         m = torchvision.models.resnet50(pretrained=True)
         model = nn.Sequential(*list(m.children())[:-2])
+        base_flatten = nn.Linear(fc_dim, base_dim)
+        fv1_flatten = nn.Linear(32*56*56, 128)
         avgpool = nn.AdaptiveAvgPool2d(output_size=1)
         classifier = nn.Linear(2048, num_classes, bias=False)
         new_m = torchvision.models._utils.IntermediateLayerGetter(
             m, {'layer1': 'feat1', 'layer2': 'feat2', 'layer3': 'feat3', 'layer4': 'feat4'}
         )
+        fpn = torchvision.ops.FeaturePyramidNetwork([256, 512, 1024, 2048], 32)
         # forward
         y_0 = model(x)
-        y_1 = avgpool(y_0)
+        y_0 = y_0.view(y_0.shape[0], y_0.shape[1])
+        y_1 = base_flatten(y_0)
+        #
         x0 = new_m(x)
-        fpn = torchvision.ops.FeaturePyramidNetwork([256, 512, 1024, 2048], 32)
         y_fp = fpn(x0)
         print('y_0: {0};'.format(y_0.shape))
         print('y_1: {0};'.format(y_1.shape))
