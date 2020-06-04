@@ -32,7 +32,7 @@ class PdsnExp(object):
         x = torch.rand(1, 3, 224, 224)
         m = torchvision.models.resnet50(pretrained=True)
         model = nn.Sequential(*list(m.children())[:-2])
-        base_flatten = nn.Linear(fc_dim, base_dim)
+        base_flatten = nn.Linear(fc_dim * 7 * 7, base_dim)
         fv1_flatten = nn.Linear(32*56*56, 128)
         avgpool = nn.AdaptiveAvgPool2d(output_size=1)
         classifier = nn.Linear(2048, num_classes, bias=False)
