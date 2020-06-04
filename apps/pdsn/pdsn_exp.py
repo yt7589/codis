@@ -2,6 +2,7 @@
 from collections import OrderedDict
 import numpy as np
 import torch
+import torch.nn as nn
 import torchvision
 from ann.mask_rcnn import MaskRCNN
 from ann.rpn import AnchorGenerator
@@ -21,13 +22,17 @@ class PdsnExp(object):
         print([(k, v.shape) for k, v in out.items()])
 
     def exp_feature_pyramid_network(self):
+        num_classes = 8999
         x = torch.rand(1, 3, 224, 224)
         m = torchvision.models.resnet50(pretrained=True)
+        model = nn.Sequential(*list(m.children())[:-2])
         new_m = torchvision.models._utils.IntermediateLayerGetter(
             m, {'layer1': 'feat1', 'layer2': 'feat2', 'layer3': 'feat3', 'layer4': 'feat4'}
         )
+        avgpool = nn.AdaptiveAvgPool2d(output_size=1)
+        classifier = nn.Linear(2048, num_classes, bias=False)
         # forward
-        y_hat = m(x)
+        y_hat = model(x)
         x0 = new_m(x)
         fpn = torchvision.ops.FeaturePyramidNetwork([256, 512, 1024, 2048], 32)
         y_fp = fpn(x0)
