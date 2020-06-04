@@ -61,10 +61,10 @@ class PdsnExp(object):
         #
         x0 = new_m(x)
         fvs = fpn(x0)
-        fv1 = self.get_feature_vector(fvs, 'feat1')
-        fv2 = self.get_feature_vector(fvs, 'feat2')
-        fv3 = self.get_feature_vector(fvs, 'feat3')
-        fv4 = self.get_feature_vector(fvs, 'feat4')
+        fv1 = self.get_feature_vector(fv_fc, fvs, 'feat1')
+        fv2 = self.get_feature_vector(fv_fc, fvs, 'feat2')
+        fv3 = self.get_feature_vector(fv_fc, fvs, 'feat3')
+        fv4 = self.get_feature_vector(fv_fc, fvs, 'feat4')
         z = torch.cat([
             coefficients['base']*y_0, 
             coefficients['feat1']*fv1,
@@ -83,7 +83,7 @@ class PdsnExp(object):
             print('{0}:{1};'.format(k, v.shape))
         '''
 
-    def get_feature_vector(self, fvs, feature_name):
+    def get_feature_vector(self, fv_fc, fvs, feature_name):
         x_fv = fvs[feature_name]
         x_fv = torch.flatten(x_fv, start_dim=0, end_dim=-1)
         return fv_fc[feature_name](x_fv)
