@@ -27,7 +27,7 @@ class PdsnExp(object):
         num_classes = 8999
         fc_dim = 2048
         feature_dim = 128
-        base_dim = 2048 - feature_dim
+        base_dim = 2048 - 4 * feature_dim
         # network definition
         x = torch.rand(1, 3, 224, 224)
         m = torchvision.models.resnet50(pretrained=True)
