@@ -28,7 +28,7 @@ class EcvModel(torch.nn.Module):
         self.coeffs = torch.tensor([1.0, 1.0, 1.0, 1.0, 1.0], requires_grad=True).to(dev)
         self.classifier = torch.nn.Linear(self.fc_dim, self.num_classes, bias=False)
         self.inter_layers = torchvision.models._utils.IntermediateLayerGetter(
-            self.cnn_bone, {'layer1': 'feat1', 'layer2': 'feat2', 'layer3': 'feat3', 'layer4': 'feat4'}
+            self.raw_resnet50, {'layer1': 'feat1', 'layer2': 'feat2', 'layer3': 'feat3', 'layer4': 'feat4'}
         )
 
     def forward(self, x):
