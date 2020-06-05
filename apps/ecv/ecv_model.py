@@ -20,10 +20,10 @@ class EcvModel(torch.nn.Module):
         self.base_fc = torch.nn.Linear(self.fc_dim * 7 * 7, self.base_dim)
         self.fpn = torchvision.ops.FeaturePyramidNetwork([256, 512, 1024, 2048], self.fpn_fv_dim)
         self.fv_fc = {
-            'feat1': torch.nn.Linear(self.fpn_fv_dim*56*56, feature_dim),
-            'feat2': torch.nn.Linear(self.fpn_fv_dim*28*28, feature_dim),
-            'feat3': torch.nn.Linear(self.fpn_fv_dim*14*14, feature_dim),
-            'feat4': torch.nn.Linear(self.fpn_fv_dim*7*7, feature_dim)
+            'feat1': torch.nn.Linear(self.fpn_fv_dim*56*56, self.fv_dim),
+            'feat2': torch.nn.Linear(self.fpn_fv_dim*28*28, self.fv_dim),
+            'feat3': torch.nn.Linear(self.fpn_fv_dim*14*14, self.fv_dim),
+            'feat4': torch.nn.Linear(self.fpn_fv_dim*7*7, self.fv_dim)
         }
         self.coeffs = torch.tensor([1.0, 1.0, 1.0, 1.0, 1.0], requires_grad=True).to(dev)
         self.classifier = nn.Linear(self.fc_dim, self.num_classes, bias=False)
