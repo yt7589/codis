@@ -50,3 +50,8 @@ class EcvModel(torch.nn.Module):
         ], dim=1)
         return self.classifier(z)
 
+    def get_feature_vector(self, fv_fc, fvs, feature_name):
+        x_fv = fvs[feature_name]
+        x_fv = torch.flatten(x_fv, start_dim=1, end_dim=-1)
+        return fv_fc[feature_name](x_fv)
+
