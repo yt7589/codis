@@ -33,7 +33,7 @@ class EcvModel(torch.nn.Module):
 
     def forward(self, x):
         base_a1 = self.cnn_bone(x)
-        base_a1 = torch.flatten(base_a_1, start_dim=1, end_dim=-1)
+        base_a1 = torch.flatten(base_a1, start_dim=1, end_dim=-1)
         base_a2 = self.base_fc(base_a1)
         fpn_a1 = self.inter_layers(x)
         fpn_y = self.fpn(fpn_a1)
