@@ -1,4 +1,5 @@
 #
+import torch
 from apps.ecv.ecv_model import EcvModel
 
 class EcvApp(object):
