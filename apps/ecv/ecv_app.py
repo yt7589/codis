@@ -7,6 +7,7 @@ class EcvApp(object):
 
     def startup(self):
         print('测试平台')
-        model = EcvModel()
+        dev = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+        model = EcvModel(dev)
         y_hat = model(x)
         print('y_hat: {0};'.format(y_hat))
