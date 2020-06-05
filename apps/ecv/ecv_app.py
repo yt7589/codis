@@ -12,4 +12,4 @@ class EcvApp(object):
         model = EcvModel(dev)
         x = torch.rand(1, 3, 224, 224)
         y_hat = model(x)
-        print('y_hat: {0};'.format(y_hat))
+        print('y_hat: {0};'.format(y_hat.shape))
