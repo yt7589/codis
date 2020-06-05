@@ -17,7 +17,7 @@ class EcvModel(torch.nn.Module):
         self.base_dim = self.fc_dim - 4 * self.fv_dim
         self.raw_resnet50 = torchvision.models.resnet50(pretrained=True)
         self.cnn_bone = torch.nn.Sequential(*list(self.raw_resnet50.children())[:-2])
-        self.base_fc = nn.Linear(self.fc_dim * 7 * 7, self.base_dim)
+        self.base_fc = torch.nn.Linear(self.fc_dim * 7 * 7, self.base_dim)
         self.fpn = torchvision.ops.FeaturePyramidNetwork([256, 512, 1024, 2048], self.fpn_fv_dim)
         self.fv_fc = {
             'feat1': torch.nn.Linear(self.fpn_fv_dim*56*56, feature_dim),
